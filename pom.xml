@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.kmizu</groupId>
-    <artifactId>parer_hands_on</artifactId>
+    <artifactId>parser_hands_on</artifactId>
     <version>0.1-SNAPSHOT</version>
     <name>nub</name>
 
