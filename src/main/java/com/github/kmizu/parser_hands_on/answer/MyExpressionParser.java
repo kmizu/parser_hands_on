@@ -9,7 +9,7 @@ public class MyExpressionParser extends AbstractExpressionParser {
     private int position;
 
     public String accept(char ch) {
-        if(input.length() < position && input.charAt(position) == ch) {
+        if(position < input.length() && input.charAt(position) == ch) {
             position++;
             return ((Character)ch).toString();
         }
@@ -33,10 +33,10 @@ public class MyExpressionParser extends AbstractExpressionParser {
     @Override
     public ExpressionNode parse(String input) {
         this.input = input;
-        this.position = position;
+        this.position = 0;
         ExpressionNode result = expression();
         if(this.position != input.length()) {
-            throw new ParseFailure("unconsumed input remains");
+            throw new ParseFailure("unconsumed input remains: " + input.substring(position));
         } else {
             return result;
         }
@@ -95,6 +95,17 @@ public class MyExpressionParser extends AbstractExpressionParser {
 
     public ExpressionNode integer() {
         int result = (acceptRange('0', '9') - '0');
+        if(result == 0) {
+            if(position >= input.length()){
+                return new ExpressionNode.ValueNode(result);
+            } else {
+                char ch = input.charAt(position);
+                if('0' <= ch && ch <= '9') {
+                    throw new ParseFailure("if number starts with 0, it cannot be follow by any digit");
+                }
+                return new ExpressionNode.ValueNode(result);
+            }
+        }
         while(true) {
             try {
                 result = result * 10 + (acceptRange('0', '9') - '0');
