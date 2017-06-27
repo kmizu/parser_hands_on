@@ -4,29 +4,41 @@ package com.github.kmizu.parser_hands_on.regular_expression;
  * 正規表現の抽象構文木を表すクラス群
  */
 public class RegularExpressionNode {
-    public static class One extends RegularExpressionNode {
+    public static class CharcterNode extends RegularExpressionNode {
         public final char ch;
-        public One(char ch) {
+        public CharcterNode(char ch) {
             this.ch = ch;
         }
     }
-    public static class Sequence extends RegularExpressionNode {
+    public static class SequenceNode extends RegularExpressionNode {
         public final RegularExpressionNode lhs, rhs;
-        public Sequence(RegularExpressionNode lhs, RegularExpressionNode rhs) {
+        public SequenceNode(RegularExpressionNode lhs, RegularExpressionNode rhs) {
             this.lhs = lhs;
             this.rhs = rhs;
         }
     }
-    public static class Choice extends RegularExpressionNode {
+    public static class ChoiceNode extends RegularExpressionNode {
         public final RegularExpressionNode lhs, rhs;
-        public Choice(RegularExpressionNode lhs, RegularExpressionNode rhs) {
+        public ChoiceNode(RegularExpressionNode lhs, RegularExpressionNode rhs) {
             this.lhs = lhs;
             this.rhs = rhs;
         }
     }
-    public static class Repetition extends RegularExpressionNode {
+    public static class Repetition0Node extends RegularExpressionNode {
         public final RegularExpressionNode target;
-        public Repetition(RegularExpressionNode target) {
+        public Repetition0Node(RegularExpressionNode target) {
+            this.target = target;
+        }
+    }
+    public static class Repetition1Node extends RegularExpressionNode {
+        public final RegularExpressionNode target;
+        public Repetition1Node(RegularExpressionNode target) {
+            this.target = target;
+        }
+    }
+    public static class OptionNode extends RegularExpressionNode {
+        public final RegularExpressionNode target;
+        public OptionNode(RegularExpressionNode target) {
             this.target = target;
         }
     }
