@@ -8,7 +8,7 @@ public class ExpressionNode {
         return new Addition(this, that);
     }
     public ExpressionNode subtract(ExpressionNode that) {
-        return new Addition(this, that);
+        return new Subtraction(this, that);
     }
     public ExpressionNode multiply(ExpressionNode that) {
         return new Multiplication(this, that);
