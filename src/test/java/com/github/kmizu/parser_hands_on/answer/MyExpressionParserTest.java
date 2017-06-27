@@ -123,37 +123,37 @@ public class MyExpressionParserTest {
 
     @Test
     public void confirmAdditionIsParsed1() {
-        assertEquals(new ExpressionNode.Addition(integer(1), integer(0)), parser.parse("1+0"));
-        assertEquals(new ExpressionNode.Addition(integer(1), integer(1)), parser.parse("1+1"));
-        assertEquals(new ExpressionNode.Addition(integer(1), integer(2)), parser.parse("1+2"));
-        assertEquals(new ExpressionNode.Addition(integer(1), integer(8)), parser.parse("1+8"));
-        assertEquals(new ExpressionNode.Addition(integer(1), integer(9)), parser.parse("1+9"));
+        assertEquals(integer(1).add(integer(0)), parser.parse("1+0"));
+        assertEquals(integer(1).add(integer(1)), parser.parse("1+1"));
+        assertEquals(integer(1).add(integer(2)), parser.parse("1+2"));
+        assertEquals(integer(1).add(integer(8)), parser.parse("1+8"));
+        assertEquals(integer(1).add(integer(9)), parser.parse("1+9"));
     }
 
     @Test
     public void confirmSubtractionIsParsed1() {
-        assertEquals(new ExpressionNode.Subtraction(integer(1), integer(0)), parser.parse("1-0"));
-        assertEquals(new ExpressionNode.Subtraction(integer(1), integer(1)), parser.parse("1-1"));
-        assertEquals(new ExpressionNode.Subtraction(integer(1), integer(2)), parser.parse("1-2"));
-        assertEquals(new ExpressionNode.Subtraction(integer(1), integer(8)), parser.parse("1-8"));
-        assertEquals(new ExpressionNode.Subtraction(integer(1), integer(9)), parser.parse("1-9"));
+        assertEquals(integer(1).subtract(integer(0)), parser.parse("1-0"));
+        assertEquals(integer(1).subtract(integer(1)), parser.parse("1-1"));
+        assertEquals(integer(1).subtract(integer(2)), parser.parse("1-2"));
+        assertEquals(integer(1).subtract(integer(8)), parser.parse("1-8"));
+        assertEquals(integer(1).subtract(integer(9)), parser.parse("1-9"));
     }
 
     @Test
     public void confirmMultiplicationIsParsed1() {
-        assertEquals(new ExpressionNode.Multiplication(integer(1), integer(0)), parser.parse("1*0"));
-        assertEquals(new ExpressionNode.Multiplication(integer(1), integer(1)), parser.parse("1*1"));
-        assertEquals(new ExpressionNode.Multiplication(integer(1), integer(2)), parser.parse("1*2"));
-        assertEquals(new ExpressionNode.Multiplication(integer(1), integer(8)), parser.parse("1*8"));
-        assertEquals(new ExpressionNode.Multiplication(integer(1), integer(9)), parser.parse("1*9"));
+        assertEquals(integer(1).multiply(integer(0)), parser.parse("1*0"));
+        assertEquals(integer(1).multiply(integer(1)), parser.parse("1*1"));
+        assertEquals(integer(1).multiply(integer(2)), parser.parse("1*2"));
+        assertEquals(integer(1).multiply(integer(8)), parser.parse("1*8"));
+        assertEquals(integer(1).multiply(integer(9)), parser.parse("1*9"));
     }
 
     @Test
     public void confirmDivisionIsParsed1() {
-        assertEquals(new ExpressionNode.Division(integer(1), integer(0)), parser.parse("1/0"));
-        assertEquals(new ExpressionNode.Division(integer(1), integer(1)), parser.parse("1/1"));
-        assertEquals(new ExpressionNode.Division(integer(1), integer(2)), parser.parse("1/2"));
-        assertEquals(new ExpressionNode.Division(integer(1), integer(8)), parser.parse("1/8"));
-        assertEquals(new ExpressionNode.Division(integer(1), integer(9)), parser.parse("1/9"));
+        assertEquals(integer(1).divide(integer(0)), parser.parse("1/0"));
+        assertEquals(integer(1).divide(integer(1)), parser.parse("1/1"));
+        assertEquals(integer(1).divide(integer(2)), parser.parse("1/2"));
+        assertEquals(integer(1).divide(integer(8)), parser.parse("1/8"));
+        assertEquals(integer(1).divide(integer(9)), parser.parse("1/9"));
     }
 }
