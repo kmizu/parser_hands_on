@@ -7,14 +7,26 @@ public class ExpressionNode {
     public ExpressionNode add(ExpressionNode that) {
         return new Addition(this, that);
     }
+    public ExpressionNode add(int that) {
+        return new Addition(this, integer(that));
+    }
     public ExpressionNode subtract(ExpressionNode that) {
         return new Subtraction(this, that);
+    }
+    public ExpressionNode subtract(int that) {
+        return new Subtraction(this, integer(that));
     }
     public ExpressionNode multiply(ExpressionNode that) {
         return new Multiplication(this, that);
     }
+    public ExpressionNode multiply(int that) {
+        return new Multiplication(this, integer(that));
+    }
     public ExpressionNode divide(ExpressionNode that) {
         return new Division(this, that);
+    }
+    public ExpressionNode divide(int that) {
+        return new Division(this, integer(that));
     }
     public static class Addition extends ExpressionNode {
         public final ExpressionNode lhs, rhs;

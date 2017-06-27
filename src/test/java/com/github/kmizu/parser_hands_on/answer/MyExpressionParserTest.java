@@ -156,4 +156,52 @@ public class MyExpressionParserTest {
         assertEquals(integer(1).divide(integer(8)), parser.parse("1/8"));
         assertEquals(integer(1).divide(integer(9)), parser.parse("1/9"));
     }
+
+    @Test
+    public void combinationOfAdditionAndSubtraction() {
+        assertEquals(integer(1).add(integer(2)).subtract(3), parser.parse("1+2-3"));
+        assertEquals(integer(1).add((integer(2).subtract(3))), parser.parse("1+(2-3)"));
+        assertEquals(integer(1).subtract(integer(2)).add(3), parser.parse("1-2+3"));
+        assertEquals(integer(1).subtract((integer(2).add(3))), parser.parse("1-(2+3)"));
+    }
+
+    @Test
+    public void combinationOfAdditionAndMultiplication() {
+        assertEquals(integer(1).add((integer(2).multiply(3))), parser.parse("1+2*3"));
+        assertEquals(integer(1).add(integer(2)).multiply(3), parser.parse("(1+2)*3"));
+        assertEquals(integer(1).multiply(2).add(3), parser.parse("1*2+3"));
+        assertEquals(integer(1).multiply(integer(2).add(3)), parser.parse("1*(2+3)"));
+    }
+
+    @Test
+    public void combinationOfAdditionAndDivision() {
+        assertEquals(integer(1).add((integer(2).divide(3))), parser.parse("1+2/3"));
+        assertEquals(integer(1).add(integer(2)).divide(3), parser.parse("(1+2)/3"));
+        assertEquals(integer(1).divide(2).add(3), parser.parse("1/2+3"));
+        assertEquals(integer(1).divide(integer(2).add(3)), parser.parse("1/(2+3)"));
+    }
+
+    @Test
+    public void combinationOfSubtractionAndMultiplication() {
+        assertEquals(integer(1).subtract((integer(2).multiply(3))), parser.parse("1-2*3"));
+        assertEquals(integer(1).subtract(integer(2)).multiply(3), parser.parse("(1-2)*3"));
+        assertEquals(integer(1).multiply(2).subtract(3), parser.parse("1*2-3"));
+        assertEquals(integer(1).multiply(integer(2).subtract(3)), parser.parse("1*(2-3)"));
+    }
+
+    @Test
+    public void combinationOfSubtractionAndDivision() {
+        assertEquals(integer(1).subtract((integer(2).divide(3))), parser.parse("1-2/3"));
+        assertEquals(integer(1).subtract(integer(2)).divide(3), parser.parse("(1-2)/3"));
+        assertEquals(integer(1).divide(2).subtract(3), parser.parse("1/2-3"));
+        assertEquals(integer(1).divide(integer(2).subtract(3)), parser.parse("1/(2-3)"));
+    }
+
+    @Test
+    public void combinationOfMultiplicationAndDivision() {
+        assertEquals(integer(1).multiply(integer(2)).divide(3), parser.parse("1*2/3"));
+        assertEquals(integer(1).multiply((integer(2).divide(3))), parser.parse("1*(2/3)"));
+        assertEquals(integer(1).divide(integer(2)).multiply(3), parser.parse("1/2*3"));
+        assertEquals(integer(1).divide((integer(2).multiply(3))), parser.parse("1/(2*3)"));
+    }
 }
