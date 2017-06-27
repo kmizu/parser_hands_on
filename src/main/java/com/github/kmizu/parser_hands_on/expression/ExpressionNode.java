@@ -4,6 +4,18 @@ package com.github.kmizu.parser_hands_on.expression;
  * 算術式の抽象構文木を表すクラス群
  */
 public class ExpressionNode {
+    public ExpressionNode add(ExpressionNode that) {
+        return new Addition(this, that);
+    }
+    public ExpressionNode subtract(ExpressionNode that) {
+        return new Addition(this, that);
+    }
+    public ExpressionNode multiply(ExpressionNode that) {
+        return new Multiplication(this, that);
+    }
+    public ExpressionNode divide(ExpressionNode that) {
+        return new Division(this, that);
+    }
     public static class Addition extends ExpressionNode {
         public final ExpressionNode lhs, rhs;
         public Addition(ExpressionNode lhs, ExpressionNode rhs) {
