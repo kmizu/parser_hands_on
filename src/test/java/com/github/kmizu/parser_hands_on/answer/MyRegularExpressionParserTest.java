@@ -20,11 +20,6 @@ public class MyRegularExpressionParserTest {
     }
 
     @Test(expected = ParseFailure.class)
-    public void confirmTestFailure3() {
-        parser.parse("+a");
-    }
-
-    @Test(expected = ParseFailure.class)
     public void confirmTestFailure4() {
         parser.parse("|a");
     }
@@ -70,7 +65,7 @@ public class MyRegularExpressionParserTest {
         assertEquals(ch('!'), parser.parse("!"));
         assertEquals(ch('/'), parser.parse("/"));
         assertEquals(ch('@'), parser.parse("@"));
-        assertEquals(ch('{'), parser.parse("}"));
+        assertEquals(ch('{'), parser.parse("{"));
         assertEquals(ch('~'), parser.parse("~"));
     }
 
@@ -112,4 +107,11 @@ public class MyRegularExpressionParserTest {
         assertEquals(ch('a').next('b').or(ch('c')), parser.parse("(ab)|c"));
     }
 
+    @Test
+    public void confirmComplexExpressionIsParsed() {
+        assertEquals(
+                ch('a').or('b').or('c').next(ch('d').repeat()).next(ch('e')),
+                parser.parse("((a|b|c)d*)e")
+        );
+    }
 }

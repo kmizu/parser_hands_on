@@ -9,6 +9,8 @@ import java.util.Set;
 
 public class MyRegularExpressionParser extends AbstractRegularExpressionParser {
     private Set<Character> metaCharacters = new HashSet<Character>() {{
+        add('(');
+        add(')');
         add('|');
         add('*');
     }};
@@ -26,7 +28,10 @@ public class MyRegularExpressionParser extends AbstractRegularExpressionParser {
     public char accept() {
         if(position < input.length()){
             char ch = input.charAt(position);
-            if(!metaCharacters.contains(ch)) return ch;
+            if(!metaCharacters.contains(ch)) {
+                position++;
+                return ch;
+            }
             throw new ParseFailure("unexpected meta character : " + ch);
         } else {
             throw new ParseFailure("unexpected EOF");

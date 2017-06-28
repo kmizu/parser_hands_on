@@ -43,7 +43,7 @@ public class RegularExpressionNode {
 
         @Override
         public String toString() {
-            return (lhs.toString() + rhs.toString());
+            return "(" + (lhs.toString() + rhs.toString()) + ")";
         }
     }
     public static class ChoiceNode extends RegularExpressionNode {
@@ -76,7 +76,7 @@ public class RegularExpressionNode {
 
         @Override
         public boolean equals(Object that) {
-            if(that instanceof ChoiceNode) {
+            if(that instanceof RepetitionNode) {
                 RepetitionNode repetition = (RepetitionNode)that;
                 return target.equals(repetition.target);
             } else {
