@@ -1,7 +1,6 @@
 package com.github.kmizu.parser_hands_on.answer;
 
 import com.github.kmizu.parser_hands_on.ParseFailure;
-import com.github.kmizu.parser_hands_on.expression.AbstractExpressionParser;
 import com.github.kmizu.parser_hands_on.regular_expression.AbstractRegularExpressionParser;
 import com.github.kmizu.parser_hands_on.regular_expression.RegularExpressionNode;
 
@@ -12,8 +11,6 @@ public class MyRegularExpressionParser extends AbstractRegularExpressionParser {
     private Set<Character> metaCharacters = new HashSet<Character>() {{
         add('|');
         add('*');
-        add('+');
-        add('?');
     }};
     private String input;
     private int position;
@@ -82,21 +79,9 @@ public class MyRegularExpressionParser extends AbstractRegularExpressionParser {
         int current = position;
         try {
             accept('*');
-            return new RegularExpressionNode.Repetition0Node(result);
+            return new RegularExpressionNode.RepetitionNode(result);
         } catch (ParseFailure e1) {
-            position = current;
-            try {
-                accept('+');
-                return new RegularExpressionNode.Repetition1Node(result);
-            } catch (ParseFailure e2) {
-                try {
-                    position = current;
-                    accept('?');
-                    return new RegularExpressionNode.OptionNode(result);
-                } catch(ParseFailure e3) {
-                    return result;
-                }
-            }
+            return result;
         }
     }
 
@@ -115,6 +100,6 @@ public class MyRegularExpressionParser extends AbstractRegularExpressionParser {
 
     public RegularExpressionNode character() {
         char ch = accept();
-        return new RegularExpressionNode.CharcterNode(ch);
+        return new RegularExpressionNode.CharacterNode(ch);
     }
 }

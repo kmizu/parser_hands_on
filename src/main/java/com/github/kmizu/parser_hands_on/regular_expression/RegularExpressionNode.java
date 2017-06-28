@@ -4,9 +4,9 @@ package com.github.kmizu.parser_hands_on.regular_expression;
  * 正規表現の抽象構文木を表すクラス群
  */
 public class RegularExpressionNode {
-    public static class CharcterNode extends RegularExpressionNode {
+    public static class CharacterNode extends RegularExpressionNode {
         public final char ch;
-        public CharcterNode(char ch) {
+        public CharacterNode(char ch) {
             this.ch = ch;
         }
     }
@@ -24,22 +24,34 @@ public class RegularExpressionNode {
             this.rhs = rhs;
         }
     }
-    public static class Repetition0Node extends RegularExpressionNode {
+    public static class RepetitionNode extends RegularExpressionNode {
         public final RegularExpressionNode target;
-        public Repetition0Node(RegularExpressionNode target) {
+        public RepetitionNode(RegularExpressionNode target) {
             this.target = target;
         }
     }
-    public static class Repetition1Node extends RegularExpressionNode {
-        public final RegularExpressionNode target;
-        public Repetition1Node(RegularExpressionNode target) {
-            this.target = target;
-        }
+
+    public RepetitionNode repeat() {
+        return new RepetitionNode(this);
     }
-    public static class OptionNode extends RegularExpressionNode {
-        public final RegularExpressionNode target;
-        public OptionNode(RegularExpressionNode target) {
-            this.target = target;
-        }
+
+    public CharacterNode ch(char value) {
+        return new CharacterNode(value);
+    }
+
+    public ChoiceNode or(RegularExpressionNode rhs) {
+        return new ChoiceNode(this, rhs);
+    }
+
+    public ChoiceNode or(char rhs) {
+        return new ChoiceNode(this, new CharacterNode(rhs));
+    }
+
+    public SequenceNode next(RegularExpressionNode rhs){
+        return new SequenceNode(this, rhs);
+    }
+
+    public SequenceNode next(char rhs){
+        return new SequenceNode(this, new CharacterNode(rhs));
     }
 }
