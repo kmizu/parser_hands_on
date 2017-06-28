@@ -9,12 +9,41 @@ public class RegularExpressionNode {
         public CharacterNode(char ch) {
             this.ch = ch;
         }
+
+        @Override
+        public boolean equals(Object that) {
+            if(that instanceof CharacterNode) {
+                return ch == ((CharacterNode)that).ch;
+            } else {
+                return false;
+            }
+        }
+
+        @Override
+        public String toString() {
+            return "" + ch;
+        }
     }
     public static class SequenceNode extends RegularExpressionNode {
         public final RegularExpressionNode lhs, rhs;
         public SequenceNode(RegularExpressionNode lhs, RegularExpressionNode rhs) {
             this.lhs = lhs;
             this.rhs = rhs;
+        }
+
+        @Override
+        public boolean equals(Object that) {
+            if(that instanceof SequenceNode) {
+                SequenceNode seq = (SequenceNode)that;
+                return lhs.equals(seq.lhs) && rhs.equals(seq.rhs);
+            } else {
+                return false;
+            }
+        }
+
+        @Override
+        public String toString() {
+            return (lhs.toString() + rhs.toString());
         }
     }
     public static class ChoiceNode extends RegularExpressionNode {
@@ -23,11 +52,41 @@ public class RegularExpressionNode {
             this.lhs = lhs;
             this.rhs = rhs;
         }
+
+        @Override
+        public boolean equals(Object that) {
+            if(that instanceof ChoiceNode) {
+                ChoiceNode choice = (ChoiceNode)that;
+                return lhs.equals(choice.lhs) && rhs.equals(choice.rhs);
+            } else {
+                return false;
+            }
+        }
+
+        @Override
+        public String toString() {
+            return "(" + lhs.toString() + "|" + rhs.toString() +  ")";
+        }
     }
     public static class RepetitionNode extends RegularExpressionNode {
         public final RegularExpressionNode target;
         public RepetitionNode(RegularExpressionNode target) {
             this.target = target;
+        }
+
+        @Override
+        public boolean equals(Object that) {
+            if(that instanceof ChoiceNode) {
+                RepetitionNode repetition = (RepetitionNode)that;
+                return target.equals(repetition.target);
+            } else {
+                return false;
+            }
+        }
+
+        @Override
+        public String toString() {
+            return "(" + target + "*" + ")";
         }
     }
 
