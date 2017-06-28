@@ -94,7 +94,7 @@ public class RegularExpressionNode {
         return new RepetitionNode(this);
     }
 
-    public CharacterNode ch(char value) {
+    public static CharacterNode ch(char value) {
         return new CharacterNode(value);
     }
 
