@@ -17,8 +17,8 @@ public class JSONNode {
         }
     }
     public static class JSONNumber extends JSONNode {
-        public final Double value;
-        public JSONNumber(Double value) {
+        public final double value;
+        public JSONNumber(double value) {
             this.value = value;
         }
     }
@@ -28,7 +28,7 @@ public class JSONNode {
          */
         private static final JSONNull instance = new JSONNull();
         private JSONNull() {}
-        public JSONNull getInstance() {
+        public static JSONNull getInstance() {
             return instance;
         }
     }
