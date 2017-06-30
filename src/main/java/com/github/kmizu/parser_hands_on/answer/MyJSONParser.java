@@ -90,7 +90,13 @@ public class MyJSONParser extends AbstractJSONParser {
                     try {
                         return jboolean();
                     } catch (ParseFailure e4) {
-                        return jnumber();
+                        position = current;
+                        try {
+                            return jnumber();
+                        } catch (ParseFailure e5) {
+                            position = current;
+                            return jstring();
+                        }
                     }
                 }
 
