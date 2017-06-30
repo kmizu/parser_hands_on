@@ -107,9 +107,19 @@ public class MyJSONParser extends AbstractJSONParser {
     public JSONNode.JSONObject jobject() {
         accept('{');
         Map<String, JSONNode> properties = new HashMap<>();
+        try {
+            String fkey = jstring().value;
+            accept(':');
+            JSONNode fvalue = jvalue();
+            properties.put(fkey, fvalue);
+        } catch(ParseFailure e) {
+            accept('}');
+            return new JSONNode.JSONObject(properties);
+        }
         while(true) {
             int current = position;
             try {
+                accept(',');
                 String key = jstring().value;
                 accept(':');
                 JSONNode value = jvalue();
@@ -126,8 +136,8 @@ public class MyJSONParser extends AbstractJSONParser {
     public JSONNode.JSONString jstring() {
         StringBuilder content = new StringBuilder();
         accept('"');
-        int current = position;
         while(true) {
+            int current = position;
             try {
                 accept('\\');
                 char code = accept();
@@ -159,6 +169,8 @@ public class MyJSONParser extends AbstractJSONParser {
                 return '\f';
             case '\\':
                 return '\\';
+            case '"':
+                return '"';
             default:
                 throw new ParseFailure("unknown escape sequence");
         }
@@ -167,9 +179,21 @@ public class MyJSONParser extends AbstractJSONParser {
     public JSONNode.JSONArray jarray() {
         accept('[');
         List<JSONNode> elements = new ArrayList<>();
+        try {
+            elements.add(jvalue());
+        } catch (ParseFailure e) {
+            accept(']');
+            return new JSONNode.JSONArray(elements);
+        }
         while(true) {
             int current = position;
-            break;
+            try {
+                accept(',');
+                elements.add(jvalue());
+            } catch (ParseFailure e) {
+                position = current;
+                break;
+            }
         }
         accept(']');
         return new JSONNode.JSONArray(elements);
