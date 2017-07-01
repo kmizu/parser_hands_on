@@ -3,6 +3,7 @@ package com.github.kmizu.parser_hands_on.answer;
 import com.github.kmizu.parser_hands_on.ParseFailure;
 import static org.junit.Assert.*;
 import org.junit.Test;
+import com.github.kmizu.parser_hands_on.my_parser.MyDigitParser;
 
 public class MyDigitParserTest {
     MyDigitParser parser = new MyDigitParser();

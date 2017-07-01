@@ -7,7 +7,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
 public class MyIntegerParserTest {
-    MyIntegerParser parser = new MyIntegerParser();
+    MyIntegerParserRevised parser = new MyIntegerParserRevised();
     @Test(expected = ParseFailure.class)
     public void confirmTestFailure1() {
         parser.parse("ab");
