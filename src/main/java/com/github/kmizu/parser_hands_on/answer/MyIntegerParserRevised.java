@@ -81,6 +81,7 @@ public class MyIntegerParserRevised extends AbstractIntegerParser {
     public Integer parse(String input) {
         this.input = input;
         this.position = 0;
+        this.stack = new Stack<>();
         int result = integer();
         if(position != input.length()) {
             throw new ParseFailure("input remains: " + input.substring(position));

@@ -43,17 +43,21 @@ public class MyExpressionParser extends AbstractExpressionParser {
     }
 
     public ExpressionNode expression() {
-        ExpressionNode result = additive();
+        return additive();
+    }
+
+    public ExpressionNode additive() {
+        ExpressionNode result = multitive();
         while(true) {
             int current = position;
             try {
                 accept('+');
-                result = new ExpressionNode.Addition(result, additive());
+                result = new ExpressionNode.Addition(result, multitive());
             } catch (ParseFailure e1) {
                 position = current;
                 try {
                     accept('-');
-                    result = new ExpressionNode.Subtraction(result, additive());
+                    result = new ExpressionNode.Subtraction(result, multitive());
                 } catch (ParseFailure e2) {
                     return result;
                 }
@@ -61,7 +65,7 @@ public class MyExpressionParser extends AbstractExpressionParser {
         }
     }
 
-    public ExpressionNode additive() {
+    public ExpressionNode multitive() {
         ExpressionNode result = primary();
         while(true) {
             int current = position;
