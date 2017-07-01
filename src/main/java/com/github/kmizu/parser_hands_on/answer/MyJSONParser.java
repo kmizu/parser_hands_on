@@ -174,7 +174,7 @@ public class MyJSONParser extends AbstractJSONParser {
             case 'n':
                 return '\n';
             case 'b':
-                return '\n';
+                return '\b';
             case 'f':
                 return '\f';
             case '\\':
