@@ -14,6 +14,7 @@ public class MyJSONParser extends AbstractJSONParser {
     private String input;
     private int position;
 
+    // ch にマッチ
     public String accept(char ch) {
         if(position < input.length() && input.charAt(position) == ch) {
             position++;
@@ -22,6 +23,7 @@ public class MyJSONParser extends AbstractJSONParser {
         throw new ParseFailure("current position is over range or current character is not " + ch);
     }
 
+    // notExpected 以外の１文字にマッチ
     public char acceptExcept(char notExpected) {
         if(position >= input.length()) {
             throw new ParseFailure("unexpected EOF");
@@ -36,6 +38,7 @@ public class MyJSONParser extends AbstractJSONParser {
         }
     }
 
+    // 任意の１文字にマッチ
     public char accept() {
         if(position < input.length()) {
             char ch = input.charAt(position);
@@ -71,6 +74,12 @@ public class MyJSONParser extends AbstractJSONParser {
         }
     }
 
+    // jvalue = jobject
+    //        | jarray
+    //        | jnull
+    //        | jboolean
+    //        | jnumber
+    //        | jstring
     public JSONNode jvalue() {
         int current = position;
         try {

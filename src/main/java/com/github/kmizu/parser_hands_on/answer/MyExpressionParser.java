@@ -4,6 +4,17 @@ import com.github.kmizu.parser_hands_on.ParseFailure;
 import com.github.kmizu.parser_hands_on.expression.AbstractExpressionParser;
 import com.github.kmizu.parser_hands_on.expression.ExpressionNode;
 
+/**
+ *  算術式のパーザ
+ *  - 1+2
+ *  - 1-2
+ *  - 1*2
+ *  - 1/2
+ *  - 1+2*3 ==> 1+(2*3)
+ *  - (1+2)*3 ==> (1+2)*3
+ *  - 1+2*3+4 ==> (1+(2*3))+4
+ *  - (1+2)*(3+4)/(5+6) ==> ((1+2)*(3+4))/(5+6)
+ */
 public class MyExpressionParser extends AbstractExpressionParser {
     private String input;
     private int position;
@@ -42,20 +53,25 @@ public class MyExpressionParser extends AbstractExpressionParser {
         }
     }
 
+    // expression = additive;
     public ExpressionNode expression() {
         return additive();
     }
 
+    // additive = multitive {'+' multitive | '-' multitive}
     public ExpressionNode additive() {
+        // multitive
         ExpressionNode result = multitive();
         while(true) {
             int current = position;
             try {
+                // '+' multitive
                 accept('+');
                 result = new ExpressionNode.Addition(result, multitive());
             } catch (ParseFailure e1) {
                 position = current;
                 try {
+                    // '-' multitive
                     accept('-');
                     result = new ExpressionNode.Subtraction(result, multitive());
                 } catch (ParseFailure e2) {
@@ -65,16 +81,20 @@ public class MyExpressionParser extends AbstractExpressionParser {
         }
     }
 
+    // multitive = primary {'*' primary | '/' primary}
     public ExpressionNode multitive() {
+        // primary
         ExpressionNode result = primary();
         while(true) {
             int current = position;
             try {
+                // '*' primary
                 accept('*');
                 result = new ExpressionNode.Multiplication(result, primary());
             } catch (ParseFailure e1) {
                 position = current;
                 try {
+                    // '/' primary
                     accept('/');
                     result = new ExpressionNode.Division(result, primary());
                 } catch (ParseFailure e2) {
@@ -84,15 +104,18 @@ public class MyExpressionParser extends AbstractExpressionParser {
         }
     }
 
+    // primary = '(' expression ')' | integer
     public ExpressionNode primary() {
         int current = position;
         try {
+            // '(' expression ')'
             accept('(');
             ExpressionNode result = expression();
             accept(')');
             return result;
         } catch (ParseFailure e) {
             position = current;
+            // integer
             return integer();
         }
     }
