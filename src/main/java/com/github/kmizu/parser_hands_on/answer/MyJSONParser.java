@@ -1,11 +1,9 @@
 package com.github.kmizu.parser_hands_on.answer;
 
 import com.github.kmizu.parser_hands_on.ParseFailure;
-import com.github.kmizu.parser_hands_on.expression.AbstractExpressionParser;
-import com.github.kmizu.parser_hands_on.expression.ExpressionNode;
 import com.github.kmizu.parser_hands_on.json.AbstractJSONParser;
 import com.github.kmizu.parser_hands_on.json.JSONNode;
-import com.sun.javafx.scene.control.skin.VirtualFlow;
+import static com.github.kmizu.parser_hands_on.json.JSONNode.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -79,28 +77,31 @@ public class MyJSONParser extends AbstractJSONParser {
             return jobject();
         } catch (ParseFailure e1) {
             position = current;
-            try {
-                return jarray();
-            } catch (ParseFailure e2) {
-                position = current;
-                try {
-                    return jnull();
-                } catch (ParseFailure e3) {
-                    position = current;
-                    try {
-                        return jboolean();
-                    } catch (ParseFailure e4) {
-                        position = current;
-                        try {
-                            return jnumber();
-                        } catch (ParseFailure e5) {
-                            position = current;
-                            return jstring();
-                        }
-                    }
-                }
+        }
 
-            }
+        try {
+            return jarray();
+        } catch (ParseFailure e2) {
+            position = current;
+        }
+
+        try {
+            return jnull();
+        } catch (ParseFailure e3) {
+            position = current;
+        }
+
+        try {
+            return jboolean();
+        } catch (ParseFailure e4) {
+            position = current;
+        }
+
+        try {
+            return jnumber();
+        } catch (ParseFailure e5) {
+            position = current;
+            return jstring();
         }
     }
 
