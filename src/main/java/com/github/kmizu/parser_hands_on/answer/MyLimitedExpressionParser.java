@@ -52,24 +52,27 @@ public class MyLimitedExpressionParser extends AbstractLimitedExpressionParser {
             return new LimitedExpressionNode.Addition(lhs, integer());
         } catch (ParseFailure e1) {
             position = current;
-            try {
-                accept('-');
-                return new LimitedExpressionNode.Subtraction(lhs, integer());
-            } catch (ParseFailure e2) {
-                position = current;
-                try {
-                    accept('*');
-                    return new LimitedExpressionNode.Multiplication(lhs, integer());
-                } catch (ParseFailure e3) {
-                    position = current;
-                    try {
-                        accept('/');
-                        return new LimitedExpressionNode.Division(lhs, integer());
-                    } catch (ParseFailure e4) {
-                        return new LimitedExpressionNode.ValueNode(lhs);
-                    }
-                }
-            }
+        }
+
+        try {
+            accept('-');
+            return new LimitedExpressionNode.Subtraction(lhs, integer());
+        } catch (ParseFailure e2) {
+            position = current;
+        }
+
+        try {
+            accept('*');
+            return new LimitedExpressionNode.Multiplication(lhs, integer());
+        } catch (ParseFailure e3) {
+            position = current;
+        }
+
+        try {
+            accept('/');
+            return new LimitedExpressionNode.Division(lhs, integer());
+        } catch (ParseFailure e4) {
+            return new LimitedExpressionNode.ValueNode(lhs);
         }
     }
 

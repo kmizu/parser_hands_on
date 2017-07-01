@@ -84,7 +84,7 @@ public class LimitedExpressionNode {
         @Override
         public boolean equals(Object that) {
             if(!(that instanceof Division)) return false;
-            Multiplication division = (Multiplication) that;
+            Division division = (Division) that;
             return lhs == division.lhs && rhs == division.rhs;
         }
 
